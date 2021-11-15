@@ -9,4 +9,5 @@
  * @property {{devOverride:true, type : "on" | "off" | "bunyan-dev" | "bunyan", bunyan : { name : string, baseLevel: "trace" | "debug" | "info" | "warn" | "error" | "fatal" }}} logger
  * @property {{logger:string, secret:string}} directories
  * @property {{filename: string, keys: string[], additional: {}}} secret
+ * @property {{enable:false, reqKey: string, reqValue: string}} oauth
  */

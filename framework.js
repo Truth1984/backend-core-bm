@@ -7,6 +7,7 @@ const loggerHandle = require("./Addon/loggerHandle");
 const secretHandle = require("./Addon/secretHandle");
 const envHandle = require("./Addon/envHandle");
 const mwHandle = require("./Addon/middleware");
+const workerAuth = require("./Addon/workerAuth");
 require("./typedef");
 
 module.exports = class Framework {
@@ -46,12 +47,17 @@ module.exports = class Framework {
           logger: un.filePathNormalize(__dirname, "../../Logger"),
           secret: un.filePathNormalize(__dirname, "../../Personal"),
         },
+        router: {},
+        oauth: {
+          enable: false,
+          reqKey: "workerauth",
+          reqValue: un.uuid(),
+        },
         secret: {
           filename: "config.js",
-          keys: ["master", "listen"],
+          keys: ["master", "listen", "oauth"],
           additional: {},
         },
-        router: {},
       },
       config
     );
@@ -117,6 +123,7 @@ module.exports = class Framework {
     });
 
     task.add("requests", async () => {
+      if (this.config.oauth.enable) this.app.use(workerAuth(this.config.oauth.reqKey, this.config.oauth.reqValue));
       for (let i in this.config.router) this.app.all(i, mwHandle(this.logger, this.config.router[i]));
 
       this.app.use((error, req, res, next) => {
@@ -131,9 +138,10 @@ module.exports = class Framework {
     });
 
     task.add("listening", async () => {
-      this.server = this.app.listen(this.config.listen, () =>
-        this.logger.info(`server listen on http port ${this.config.listen}`)
-      );
+      let infomsg = `Listening on port ${this.config.listen}`;
+      if (this.config.oauth.enable)
+        infomsg += ` oauth key: ${this.config.oauth.reqKey} value: ${this.config.oauth.reqValue}`;
+      this.server = this.app.listen(this.config.listen, () => this.logger.info(infomsg));
     });
 
     task.add("pre-terminate", () => {
