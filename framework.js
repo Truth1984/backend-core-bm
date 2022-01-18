@@ -67,9 +67,6 @@ module.exports = class Framework {
      * @type {{trace: (msg: any) => any, debug: (msg: any) => any, info: (msg: any) => any, warn: (msg: any) => any, error: (msg: any) => any, fatal: (msg: any) => any}}
      */
     this.logger = loggerHandle(this.config);
-    this.runtime = {
-      scheduler: {},
-    };
   }
 
   addSecretKey(map) {
