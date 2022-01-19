@@ -1,3 +1,5 @@
+const u = require("awadau");
+
 module.exports = (logger, callback) => {
   let throwError = (e, req) =>
     logger.error({
