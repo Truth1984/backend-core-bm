@@ -21,6 +21,7 @@ module.exports = class Framework {
     this.express = express;
     this.app = express();
     this.app.use(bodyParser.json({ type: "application/json" }));
+    this.app.use(bodyParser.text({ type: "text/*" }));
     this.app.use(bodyParser.urlencoded({ extended: true }));
 
     config = u.mapMergeDeep(
