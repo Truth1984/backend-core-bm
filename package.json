@@ -1,6 +1,6 @@
 {
   "name": "backend-core-bm",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "main": "index.js",
   "description": "utils",
   "scripts": {
@@ -13,15 +13,15 @@
   "author": "Awada.Z",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Truth1984/backend-core/issues"
+    "url": "https://github.com/Truth1984/backend-core-bm/issues"
   },
-  "homepage": "https://github.com/Truth1984/backend-core#readme",
+  "homepage": "https://github.com/Truth1984/backend-core-bm#readme",
   "dependencies": {
     "archiver": "^5.0.2",
-    "awadau": "^1.1.15",
+    "awadau": "^1.1.17",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
-    "bunyan": "^1.8.14",
+    "bunyan": "^1.8.15",
     "colors": "^1.4.0",
     "download": "^6.2.5",
     "express": "^4.17.1",
