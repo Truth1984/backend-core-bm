@@ -2,6 +2,7 @@ const u = require("awadau");
 const un = require("./core");
 const express = require("express");
 const bodyParser = require("body-parser");
+const cors = require("cors");
 const tl2 = require("tl2");
 const loggerHandle = require("./Addon/loggerHandle");
 const secretHandle = require("./Addon/secretHandle");
@@ -36,6 +37,7 @@ module.exports = class Framework {
           "post-process": [],
           "pre-terminate": [],
         },
+        cors: false,
         logger: {
           devOverride: true,
           type: "on",
@@ -63,6 +65,8 @@ module.exports = class Framework {
       config
     );
     this.config = config;
+
+    if (this.config.cors) this.app.use(cors());
 
     /**
      * @type {{trace: (msg: any) => any, debug: (msg: any) => any, info: (msg: any) => any, warn: (msg: any) => any, error: (msg: any) => any, fatal: (msg: any) => any}}
