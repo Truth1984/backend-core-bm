@@ -21,9 +21,6 @@ module.exports = class Framework {
   constructor(config = {}) {
     this.express = express;
     this.app = express();
-    this.app.use(bodyParser.json({ type: "application/json" }));
-    this.app.use(bodyParser.text({ type: "text/*" }));
-    this.app.use(bodyParser.urlencoded({ extended: true }));
 
     config = u.mapMergeDeep(
       {
@@ -38,6 +35,7 @@ module.exports = class Framework {
           "pre-terminate": [],
         },
         cors: false,
+        bodyLimit: "10mb",
         logger: {
           devOverride: true,
           type: "on",
@@ -65,6 +63,10 @@ module.exports = class Framework {
       config
     );
     this.config = config;
+
+    this.app.use(bodyParser.json({ type: "application/json", limit: this.config.bodyLimit }));
+    this.app.use(bodyParser.text({ type: "text/*", limit: this.config.bodyLimit }));
+    this.app.use(bodyParser.urlencoded({ extended: true }));
 
     if (this.config.cors) this.app.use(cors());
 
